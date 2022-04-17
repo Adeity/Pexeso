@@ -4,6 +4,7 @@ export class PexesoBoard {
     private cards: Array<PexesoCard>;
     private nDimension: number; // if this is 4, then numOfCards is 16
     private numOfCards: number;
+    private numOfOpenedCards;
     public revealedCardOne: PexesoCard;
     public revealedCardTwo: PexesoCard;
     private openedCards: Array<PexesoCard>;
@@ -11,7 +12,8 @@ export class PexesoBoard {
     private audio: HTMLAudioElement
 
     constructor(size: number) {
-        this.nDimension = size % 2 == 0 ? size : size + 1
+        this.nDimension = size % 2 == 0 ? size : size + 1;
+        this.numOfOpenedCards = 0;
         this.numOfCards = this.nDimension * this.nDimension;
         this.cards = new Array<PexesoCard>(this.numOfCards)
         this.openedCards = new Array<PexesoCard>(this.numOfCards)
@@ -223,13 +225,37 @@ export class PexesoBoard {
 
     openRevealedCards() {
         this.playSound();
+        // push them to list
         this.openedCards.push(this.revealedCardOne)
         this.openedCards.push(this.revealedCardTwo)
+        this.numOfOpenedCards++
+        this.numOfOpenedCards++
 
+        // change their state so their css changes
         this.revealedCardOne.setState("opened")
         this.revealedCardTwo.setState("opened")
 
+        // change their svg
+        this.revealedCardOne.getHtmlElement().querySelector("svg")
+
         this.revealedCardOne = null
         this.revealedCardTwo = null
+
+        this.checkGameWon();
+    }
+
+    checkGameWon() {
+        if (this.numOfCards === this.numOfOpenedCards) {
+            this.gameWon()
+        }
+    }
+
+    gameWon() {
+        const svgElement = document.body.querySelector("#Capa_1")
+        const mouth = svgElement.querySelector("#smiley-mouth");
+        const face = svgElement.querySelector("#smiley-face");
+
+        face.setAttributeNS(null, "style", "fill:#FFA233")
+        mouth.setAttributeNS(null, "style", "fill: red")
     }
 }

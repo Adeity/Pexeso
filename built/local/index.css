@@ -1,7 +1,11 @@
+body{
+    background-color: azure;
+}
 main {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 .pexeso-board {
     background: antiquewhite;
@@ -87,4 +91,10 @@ main {
 
 @media screen and(min-width: 1400px) {
 
+}
+
+#Capa_1 {
+    padding: 2rem 0;
+    min-width: 3rem;
+    max-width: 5rem;
 }
