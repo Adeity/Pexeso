@@ -98,3 +98,10 @@ main {
     min-width: 3rem;
     max-width: 5rem;
 }
+
+div[data-view] {
+    display: none;
+}
+div[data-view].active {
+    display: inherit;
+}
