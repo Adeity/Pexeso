@@ -11,7 +11,7 @@ export class PexesoBoard {
     private htmlElement: Element;
     private audio: HTMLAudioElement
 
-    constructor(size: number) {
+    constructor(size: number, selector: string) {
         this.nDimension = size % 2 == 0 ? size : size + 1;
         this.numOfOpenedCards = 0;
         this.numOfCards = this.nDimension * this.nDimension;
@@ -19,7 +19,7 @@ export class PexesoBoard {
         this.openedCards = new Array<PexesoCard>(this.numOfCards)
         this.revealedCardOne = null
         this.revealedCardTwo = null
-        this.htmlElement = document.body.querySelector("#pexeso-board")
+        this.htmlElement = document.body.querySelector(selector)
         this.htmlElement.addEventListener("click", evt => this.handleClick(evt), true);
         this.initializeCards()
         this.shuffleBoard()
