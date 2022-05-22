@@ -4,14 +4,26 @@ export class PexesoBoard {
     private cards: Array<PexesoCard>;
     private nDimension: number; // if this is 4, then numOfCards is 16
     private numOfCards: number;
-    private numOfOpenedCards;
+    private numOfOpenedCards: number;
     public revealedCardOne: PexesoCard;
     public revealedCardTwo: PexesoCard;
     private openedCards: Array<PexesoCard>;
     private htmlElement: Element;
     private audio: HTMLAudioElement
 
-    constructor(size: number, selector: string) {
+    constructor() {
+        this.audio = new Audio("./sound/whoosh.mp3")
+    }
+
+    draw(size: number, selector: string) {
+        this.initParameters(size, selector)
+        this.initializeCards()
+        this.shuffleBoard()
+        this.fillBoard();
+    }
+
+    initParameters(size: number, selector: string){
+        this.svgGameStart()
         this.nDimension = size % 2 == 0 ? size : size + 1;
         this.numOfOpenedCards = 0;
         this.numOfCards = this.nDimension * this.nDimension;
@@ -20,10 +32,9 @@ export class PexesoBoard {
         this.revealedCardOne = null
         this.revealedCardTwo = null
         this.htmlElement = document.body.querySelector(selector)
+        this.htmlElement.innerHTML = "";
+        this.htmlElement.removeEventListener("click", evt => this.handleClick(evt), true);
         this.htmlElement.addEventListener("click", evt => this.handleClick(evt), true);
-        this.initializeCards()
-        this.shuffleBoard()
-        this.audio = new Audio("./sound/whoosh.mp3")
     }
 
     playSound() {
@@ -97,7 +108,6 @@ export class PexesoBoard {
             row += this.cards[i].toString() + " "
         }
         console.log(row)
-        row = ""
         console.log("\n")
     }
 
@@ -187,7 +197,6 @@ export class PexesoBoard {
 
     hideRevealedCards() {
         setTimeout(e => {
-            debugger
             this.revealedCardOne.setState("closed")
             this.revealedCardTwo.setState("closed")
             this.revealedCardOne = null
@@ -248,6 +257,15 @@ export class PexesoBoard {
         if (this.numOfCards === this.numOfOpenedCards) {
             this.gameWon()
         }
+    }
+
+    svgGameStart() {
+        const svgElement = document.body.querySelector("#Capa_1")
+        const mouth = svgElement.querySelector("#smiley-mouth");
+        const face = svgElement.querySelector("#smiley-face");
+
+        face.setAttributeNS(null, "style", "fill:grey")
+        mouth.setAttributeNS(null, "style", "fill: white")
     }
 
     gameWon() {

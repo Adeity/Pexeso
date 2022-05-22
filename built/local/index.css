@@ -1,12 +1,20 @@
 body{
     background-color: azure;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
 }
 main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    flex-grow: 1;
 }
+/*main {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    flex-direction: column;*/
+/*    flex-grow: 1;*/
+/*}*/
 .pexeso-board {
     background: antiquewhite;
     border: 5px solid red;
@@ -15,8 +23,11 @@ main {
     justify-content: space-around;
     align-items: center;
     flex-direction: column;
-    min-width: 100%;
+    min-height: 30rem;
 }
+/*.active{*/
+/*    width: 100%;*/
+/*}*/
 .pexeso-board-row {
     padding: 1rem 0;
 }
@@ -102,6 +113,19 @@ main {
 div[data-view] {
     display: none;
 }
+
 div[data-view].active {
     display: inherit;
 }
+div[data-view="hra"].active {
+    /*display: flex;*/
+    /*justify-content: center;*/
+}
+
+/*div[data-view].active#home{*/
+/*    display: flex!important;*/
+/*    flex-wrap: wrap;*/
+/*    flex-direction: column;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*}*/
