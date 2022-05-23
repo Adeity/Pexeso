@@ -1,6 +1,9 @@
 import {PexesoCard} from "./PexesoCard";
 import {App} from "./index";
 
+/**
+ * Pexeso board class that handles all the game logic and renders view
+ */
 export class PexesoBoard {
     private cards: Array<PexesoCard>;
     private nDimension: number; // if this is 4, then numOfCards is 16
@@ -28,6 +31,11 @@ export class PexesoBoard {
         this.fillBoard();
     }
 
+    /**
+     * Initalize parameters for start of the game
+     * @param size - size of pexeso board
+     * @param selector - selector for board element in document
+     */
     initParameters(size: number, selector: string){
         this.svgGameStart()
         this.nDimension = size % 2 == 0 ? size : size + 1;
@@ -43,12 +51,18 @@ export class PexesoBoard {
         this.htmlElement.addEventListener("click", evt => this.handleClick(evt), true);
     }
 
+    /**
+     * Play sound
+     */
     playSound() {
         if(this.audio.readyState === HTMLMediaElement.HAVE_ENOUGH_DATA) {
             this.audio.play();
         }
     }
 
+    /**
+     * Handle click on the pexeso Board.
+     */
     handleClick(e: Event) {
         e.stopPropagation();
         const pexesoCard = <Element> e.composedPath()[0]
@@ -70,6 +84,9 @@ export class PexesoBoard {
         }
     }
 
+    /**
+     * Find card by its id
+     */
     getCardById(id: number): PexesoCard {
         for (let i = 0; i < this.numOfCards; i++) {
             if (this.cards[i].getId() === id) {
@@ -80,6 +97,9 @@ export class PexesoBoard {
     }
 
 
+    /**
+     * Fill cards aray with PexesoCards
+     */
     initializeCards() {
         let imageCode: number = 0
         for (let i = 0; i < this.numOfCards; i++) {
@@ -92,10 +112,9 @@ export class PexesoBoard {
     }
 
 
-    isGameOver(): boolean {
-        return this.openedCards.length == this.numOfCards
-    }
-
+    /**
+     * Shuffle board af pexeso cards
+     */
     shuffleBoard() {
         for (let i = this.cards.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -117,6 +136,9 @@ export class PexesoBoard {
         return row
     }
 
+    /**
+     * Fill PexesoBoard View according to state
+     */
     fillBoard(): void {
         const element = this.htmlElement;
         let index = 0;
@@ -131,40 +153,24 @@ export class PexesoBoard {
         }
     }
 
-    refillBoard(element: Element): void {
-        element.innerHTML = "";
-        for (let i = 0; i < this.numOfCards; i++) {
-            element.append(this.cards[i].getHtmlElement())
-        }
-    }
 
-
-    getPositionOfCard(id: number) {
-        for (let i = 0; i < this.numOfCards; i++) {
-            let currentCard = this.cards[i]
-            if (currentCard.getId() == id) {
-                return i
-            }
-        }
-        return null
-    }
-
-    getCardAtPosition(position: number) {
-        return this.cards[position]
-    }
-
+    /**
+     * Check if there is one card revealed
+     */
     isFirstCardRevealed(): boolean {
         return this.revealedCardOne != null
     }
 
+    /**
+     * Check if there are two cards revealed
+     */
     isSecondCardRevealed(): boolean {
         return this.revealedCardTwo != null
     }
 
-    revealCardById(id: number) {
-        let cardAtPosition = this.getCardById(id);
-        this.revealCard(cardAtPosition);
-    }
+    /**
+     * Reveal card that was clicked on
+     */
     revealCard(card: PexesoCard) {
         //  are two cards revealed
         if (this.isSecondCardRevealed()) {
@@ -181,6 +187,9 @@ export class PexesoBoard {
         return card;
     }
 
+    /**
+     * See if two of revealed cards are the same. If so, open them
+     */
     checkRevealedCards() {
         if (this.revealedCardOne.imgEquals(this.revealedCardTwo)) {
             this.openRevealedCards()
@@ -189,6 +198,9 @@ export class PexesoBoard {
         this.hideRevealedCards()
     }
 
+    /**
+     * Hide revealed cards if they dont match
+     */
     hideRevealedCards() {
         setTimeout(e => {
             this.revealedCardOne.setState("closed")
@@ -199,16 +211,16 @@ export class PexesoBoard {
     }
 
 
-    hideCardById(id: number) {
-        let cardAtPosition = this.getCardById(id)
-        this.hideCard(cardAtPosition);
-    }
+    /**
+     * Hide individual card
+     * @param card
+     */
     hideCard(card: PexesoCard) {
         card.setState("closed")
-        if (card== this.revealedCardOne) {
+        if (card == this.revealedCardOne) {
             this.revealedCardOne = null
         }
-        else if (card== this.revealedCardTwo){
+        else if (card == this.revealedCardTwo){
             this.revealedCardTwo = null
         }
     }
@@ -217,15 +229,15 @@ export class PexesoBoard {
         let cardAtPosition = this.getCardById(id)
         this.openCard(cardAtPosition)
     }
+
     openCard(card: PexesoCard) {
         card.setState("opened")
         this.openedCards.push(card)
     }
 
-    getOpenedCards(): Array<PexesoCard> {
-        return this.openedCards;
-    }
-
+    /**
+     * Open revealed cards if they match. Set their state to open
+     */
     openRevealedCards() {
         this.playSound();
         // push them to list
@@ -247,12 +259,18 @@ export class PexesoBoard {
         this.checkGameWon();
     }
 
+    /**
+     * Chekc if the game is at an end
+     */
     checkGameWon() {
         if (this.numOfCards === this.numOfOpenedCards) {
             this.app.gameWon()
         }
     }
 
+    /**
+     * Set smiley face svg to black and white at the start of the game
+     */
     svgGameStart() {
         const svgElement = document.body.querySelector("#Capa_1")
         const mouth = svgElement.querySelector("#smiley-mouth");
@@ -262,6 +280,9 @@ export class PexesoBoard {
         mouth.setAttributeNS(null, "style", "fill: white")
     }
 
+    /**
+     * Game is won so set the svg smiley face to be colorful
+     */
     gameWon() {
         const svgElement = document.body.querySelector("#Capa_1")
         const mouth = svgElement.querySelector("#smiley-mouth");

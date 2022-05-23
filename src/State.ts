@@ -1,3 +1,6 @@
+/**
+ * State class usde by PexesoCard. Can be closed, opened or revealed
+ */
 export class State {
     private state: string
     constructor(state: string) {

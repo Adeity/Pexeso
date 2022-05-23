@@ -1,6 +1,9 @@
 import {State} from "./State";
 import {MyImage} from "./MyImage";
 
+/**
+ * PexesoCard which has an image, state (closed, open, revealed), an id and its html element
+ */
 export class PexesoCard {
     private id: number;
     private state: State;
@@ -61,7 +64,10 @@ export class PexesoCard {
         }
         return this.htmlElement
     }
-    
+
+    /**
+     * Convert PexesoCard to an HTML div element according to its state
+     */
     toHTMLElement(): HTMLDivElement {
         const div = document.createElement("div")
         div.setAttribute("class", "pexeso-card " + this.state.getState())

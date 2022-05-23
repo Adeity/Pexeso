@@ -1,7 +1,13 @@
 import {PexesoBoard} from "./PexesoBoard";
 import {ScoreBoard} from "./ScoreBoard";
 
+/**
+ * Initalize navigation and set route on load of page
+ */
 function initializeNavigation(setRoute: (s: string) => void) {
+    /**
+     * Action when hash changes in URL
+     */
     function onHashChanged() {
         switch (location.hash) {
             case "#home": setRoute("home"); break;
@@ -16,6 +22,9 @@ function initializeNavigation(setRoute: (s: string) => void) {
     window.addEventListener('hashchange', onHashChanged, false);
 }
 
+/**
+ * Main App class
+ */
 export class App {
     private scoreBoard: ScoreBoard
     private sizeInputElement: HTMLInputElement
@@ -38,6 +47,9 @@ export class App {
     }
 
 
+    /**
+     * Change active page of application and change hash
+     */
     setRoute(route: string) {
         location.hash = route;
         const views = document.querySelectorAll("[data-view]");
@@ -47,6 +59,9 @@ export class App {
         document.querySelector("[data-view="+route+"]").classList.add("active");
     }
 
+    /**
+     * Check if size in input field is a valid value
+     */
     validateSize(): boolean {
         const validValues = [2, 4]
         const size = parseInt(this.sizeInputElement.value);
@@ -58,6 +73,9 @@ export class App {
         return false;
     }
 
+    /**
+     * Check if name input is valid
+     */
     validateName(): boolean {
         const value = this.nameInputElement.value
 
@@ -68,6 +86,9 @@ export class App {
         return false;
     }
 
+    /**
+     * Action when Start button gets clicked
+     */
     startPexesoButtonClick(){
         const isInvalidSize = this.validateSize();
         const isInvalidName = this.validateName();
@@ -89,6 +110,9 @@ export class App {
     }
 
 
+    /**
+     * Start new game of Pexeso
+     */
     startPexeso(){
         if (this.pexesoBoard == null) {
             this.pexesoBoard = new PexesoBoard();
@@ -97,6 +121,9 @@ export class App {
         this.pexesoBoard.draw(this.size, this.pexesoBoardSelector)
     }
 
+    /**
+     * Game is won so do a coupe of actions
+     */
     gameWon() {
         this.pexesoBoard.gameWon()
         this.scoreBoard.playerWon(this.name)
@@ -106,22 +133,3 @@ export class App {
 }
 
 new App()
-
-// localStorage.clear()
-// localStorage.setItem("score", JSON.stringify([]))
-// localStorage.setItem("scoreObj", JSON.stringify({}))
-//
-// const score = localStorage.getItem("score")
-// const scorehu = localStorage.getItem("scoreObj")
-// const scoreParsed = JSON.parse(score);
-// const scorehuParsed = JSON.parse(scorehu);
-// console.log(score)
-// console.log(scorehu)
-// console.log(scoreParsed)
-// console.log(scorehuParsed)
-//
-// scoreParsed[0] = "hovno"
-// localStorage.setItem("score", JSON.stringify(scoreParsed));
-//
-// console.log(JSON.parse(localStorage.getItem("score")))
-

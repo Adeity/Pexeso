@@ -1,5 +1,8 @@
 import {App} from "./index";
 
+/**
+ * Class that renders score board view. It also reads and sets score board which is saved in localstorage.
+ */
 export class ScoreBoard {
     private score: Object
     private scoreBoardElement: HTMLTableElement
@@ -14,6 +17,9 @@ export class ScoreBoard {
         this.app = app;
     }
 
+    /**
+     * Render table according to localStorage state
+     */
     renderView() {
         this.scoreBoardElement.innerHTML = "";
 
@@ -35,6 +41,9 @@ export class ScoreBoard {
         }
     }
 
+    /**
+     * Read score value from localStorage
+     */
     getScore(): any {
         if (window.localStorage.getItem("score") == null) {
             window.localStorage.setItem("score", JSON.stringify([]))
@@ -46,7 +55,11 @@ export class ScoreBoard {
     setScore(score: any[]) {
         localStorage.setItem("score", JSON.stringify(score))
     }
-    
+
+    /**
+     * Player won so update localstarege
+     * @param playerName
+     */
     playerWon(playerName: string){
         let playerFound: boolean = false
         const score: any[] = this.getScore();

@@ -1,3 +1,6 @@
+/**
+ * Image class for PexesoCard so correct image gets oaded
+ */
 export class MyImage {
     private imageCode: number
     private imageFolder: string = "./pexeso-images"
