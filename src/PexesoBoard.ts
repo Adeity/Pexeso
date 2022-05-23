@@ -53,6 +53,9 @@ export class PexesoBoard {
         e.stopPropagation();
         const pexesoCard = <Element> e.composedPath()[0]
         const pexesoCardId = pexesoCard.getAttribute("data-id")
+        if (pexesoCardId == null) {
+            return;
+        }
         const pexesoCardInstance = this.getCardById(Number(pexesoCardId));
 
         const pexesoCardState = pexesoCardInstance.getState();
