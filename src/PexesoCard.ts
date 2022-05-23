@@ -74,7 +74,6 @@ export class PexesoCard {
         div.append(img)
 
         div.addEventListener("click", e=> {
-            console.log(e)
             if(div.classList.contains("revealed")) {
                 div.classList.remove("revealed")
                 div.classList.add("closed")

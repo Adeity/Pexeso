@@ -1,4 +1,5 @@
 import {PexesoCard} from "./PexesoCard";
+import {App} from "./index";
 
 export class PexesoBoard {
     private cards: Array<PexesoCard>;
@@ -10,9 +11,14 @@ export class PexesoBoard {
     private openedCards: Array<PexesoCard>;
     private htmlElement: Element;
     private audio: HTMLAudioElement
+    private app: App
 
     constructor() {
         this.audio = new Audio("./sound/whoosh.mp3")
+    }
+
+    setApp(app: App) {
+        this.app = app;
     }
 
     draw(size: number, selector: string) {
@@ -50,12 +56,10 @@ export class PexesoBoard {
         const pexesoCardInstance = this.getCardById(Number(pexesoCardId));
 
         const pexesoCardState = pexesoCardInstance.getState();
-        console.log(pexesoCardState)
         switch (pexesoCardState.getState()){
             case "opened":
                 break;
             case "closed":
-                console.log("card is closed, try revealing")
                 this.revealCard(pexesoCardInstance)
                 break;
             case "revealed":
@@ -97,19 +101,6 @@ export class PexesoBoard {
         return this.cards;
     }
 
-    printBoard() {
-        let row: string = ""
-        for (let i = 0; i < this.numOfCards; i++) {
-            if (i % this.nDimension == 0) {
-                console.log(row)
-                row = ""
-                console.log("\n")
-            }
-            row += this.cards[i].toString() + " "
-        }
-        console.log(row)
-        console.log("\n")
-    }
 
     toString(): string {
         let row: string = ""
@@ -255,7 +246,7 @@ export class PexesoBoard {
 
     checkGameWon() {
         if (this.numOfCards === this.numOfOpenedCards) {
-            this.gameWon()
+            this.app.gameWon()
         }
     }
 

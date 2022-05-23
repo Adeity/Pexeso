@@ -22,6 +22,9 @@
                 <a href="#hra" class="nav-link">Pexeso</a>
             </li>
             <li class="nav-item">
+                <a href="#score" class="nav-link">Score</a>
+            </li>
+            <li class="nav-item">
                 <a href="#about" class="nav-link">About</a>
             </li>
         </ul>
@@ -29,6 +32,16 @@
 </div>
 <main class="container">
     <div id="home" data-view="home" class="p-2">
+        <div class="row justify-content-center mb-2">
+            <div class="col-md-3">
+                <div class="input-group has-validation">
+                    <span class="input-group-text">Name</span>
+                    <input id="name_input" class="form-control " type="text" >
+                    <div class="invalid-feedback">Must not be empty</div>
+                </div>
+                <!--                <input id="size_input" class="form-control" style="width: 6rem" type="number">-->
+            </div>
+        </div>
         <div class="row justify-content-center">
             <div class="col-md-3">
                 <div class="input-group has-validation">
@@ -37,7 +50,6 @@
                     <div class="invalid-feedback">Must be 2 or 4</div>
                 </div>
                 <div class="form-text">Only sizes of 2 and 4 supported</div>
-                <!--                <input id="size_input" class="form-control" style="width: 6rem" type="number">-->
             </div>
         </div>
         <div class="row justify-content-center">
@@ -51,6 +63,27 @@
     <div data-view="hra">
         <div id="pexeso-board" class="pexeso-board">
 
+        </div>
+    </div>
+
+    <div data-view="score">
+        <div class="row justify-content-center">
+            <div class="col-auto text-center">
+                <h3>Score</h3>
+                <p>Scoreboard</p>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Won Count</th>
+                </tr>
+                </thead>
+                <tbody id="score_board">
+                </tbody>
+            </table>
         </div>
     </div>
 
