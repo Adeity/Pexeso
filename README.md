@@ -1,13 +1,13 @@
 # Pexeso
-## Cíl projektu
-Cílem projetku bylo vytvořit Pexeso. <br>
-Pexeso může mít velikost buďto 2 resp. 4, tak aby mělo 4 resp 16 kartiček dohromady.
+## Project
+Running project: https://awesomepexeso.netlify.app/#home <br>
+This is a game of Pexeso. <br>
+You can enter size 2 or 4 of pexeso. Only sizes of 2 and 4 are supported at the moment.
 <br>
-Jakmile uživatel dohraje pexeso, uloží se mu jeho výhra do score boardu.
-## Postup
-Na home stránce zadejte svoje jméno a velikost boardu. Klikněte na start a začněte hrát. Hrajte pexeso, tak jak ho znáte.
-## Popis funkčnosti
-PexesoBoard reaguje na uživatelův klik myši a z eventu clicku si zjistí o jakou kartičku se jedná. V závislosti na 
-stavu kartičky a celé hry změní stav karty či nikoli.
-## Technologie
-Byl využit TypeScript společně s webpackem. K View byl využit bootsrap 5 nebo custom css. 
+Once you complete the game you get redirected to the scoreboard. I used LocalStorage to remember the win count.
+## How to play
+On home page enter your name and size of pexeso board. Click Start to stay playing. Play pexeso as you know it.
+## Functionalities
+PexesoBoard reacts to click event from user. The board catches this event first and it redirects it to the card that was meant to be clicked on. The state of the board and card will be changed according to actual state of game and card.
+## Technologies
+I used TypeScript to develop this, which I bundle using webpack. For the CSS3, HTML5 I use Bootstrap 5 and also some custom CSS3.
